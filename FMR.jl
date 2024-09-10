@@ -28,7 +28,7 @@ end
 
 
 using DifferentialEquations
-using Plots
+
 
 # 問題定義 (地球・月系のNear-Rectilinear Halo Orbitを与える初期条件)
 S0 = [pi/2, 0.0, 0.0]
@@ -49,10 +49,6 @@ prob = ODEProblem(LLG!, S0, tspan, params)
 # 計算
 #result = solve(prob, reltol=1e-12, abstol=1e-12)
 
-# 描画
-t = result.t 
-x = [u[1] for u in result.u]
-y = [u[2] for u in result.u]
 println(length(x))
 
 
