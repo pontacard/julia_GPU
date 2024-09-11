@@ -40,11 +40,10 @@ function history(para_dif, Bac, tspan, S0)      #structのparasを引数にす�
     return [θ ϕ z]
 end
 
-function FMR_Lyapunov_map(per, cal_num,paras,tspan, S0,sta_B,end_B,step_B,Lya_step,start_step) #step_Bは等差数列の差の値を入れる
-    B_eval = Vector(sta_B :step_B: end_B)
+function FMR_Lyapunov_map(per, cal_num,paras,tspan, S0,B_eval,Lya_step,start_step) #step_Bは等差数列の差の値を入れる
     B_list = []
     Lya_list = []
-    Threads.@threads for Bac in B_eval
+    for Bac in B_eval
         #duf = FMR(t_span,α, B_ex,BK, γ,[0,B,0], ω,phase, S0)
         Lya = matsunaga_Lyapunov(per, Lya_step, cal_num, start_step, paras, [0.0, Bac, 0.0], tspan, S0)
         #print(Lya) 
@@ -108,11 +107,13 @@ Bac_phase = [0.0, 0.0, 0.0]
 α = 0.05
 γ = 0.176335977
 ω = 20.232
-dt = 0.0001
+dt = 0.001
 params = paramerte(dt,α,B, BK, γ, ω, Bac_phase)
 per = [0.01,0.0, 0.0]
-start_step = 7000000
+start_step = 700000
 Lya_step = 1001
+B_eval = Vector(0:0.1:25)
+#println(B_eval)
 
-FMR_Lyapunov_map(per,  5,params, tspan, S0, 0, 25, 251,Lya_step,start_step)
+FMR_Lyapunov_map(per,  5,params, tspan, S0, B_eval,Lya_step,start_step)
 
