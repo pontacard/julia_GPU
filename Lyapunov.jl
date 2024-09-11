@@ -1,6 +1,6 @@
 using DifferentialEquations
-using Plots
 using LinearAlgebra
+using Base.Threads
 
 struct paramerte
     dt
@@ -44,14 +44,20 @@ function FMR_Lyapunov_map(per, cal_num,paras,tspan, S0,sta_B,end_B,step_B,Lya_st
     B_eval = Vector(sta_B :step_B: end_B)
     B_list = []
     Lya_list = []
-    for Bac in B_eval
+    Threads.@threads for Bac in B_eval
         #duf = FMR(t_span,α, B_ex,BK, γ,[0,B,0], ω,phase, S0)
         Lya = matsunaga_Lyapunov(per, Lya_step, cal_num, start_step, paras, [0.0, Bac, 0.0], tspan, S0)
         #print(Lya) 
-        Lya_list = append(Lya_list, [Lya])
-        B_list = append(B_list, [Bac])
+        Lya_list = append!(Lya_list, [Lya])
+        B_list = append!(B_list, [Bac])
+        println(Bac)
     end
-    #np.savetxt(f"csv/maps_0.01_light/FMR_Lyapunovmap_Bx_{B_ex[0]}_Ky_{K[1]}_{omega}GHz._start_step_{start_step}_Lyastep_{Lya_step}_alpha{alpha}_paper_0-25.txt", np.stack([B_list,Lya_list]))
+
+    filename = "julia_GPU/data/maps_test/FMR_Lyapunovmap_Bx_$(paras.B[1])_Ky_$(paras.BK[2])_$(paras.ω)GHz._start_step_$(start_step)_Lyastep_$(Lya_step)_alpha$(α)_paper_0-25.txt"
+    open(filename,"w") do out
+        Base.print_array(out, hcat(B_list[:], Lya_list[:])) # x,y,zの3列にして掃き出し
+    end
+
 end 
     
 function matsunaga_Lyapunov(pertu, step, cal_num, start_step,paras,Bac, tspan, S0)
@@ -60,22 +66,22 @@ function matsunaga_Lyapunov(pertu, step, cal_num, start_step,paras,Bac, tspan, S
     println(Lya_dt)
     ans0_ = history(paras,Bac, tspan, S0)
     ans0 = transpose(ans0_)
-    println(ans0[: , start_step])
+    #println(ans0[: , start_step])
     
 
     dX0 = ans0[: , start_step] + pertu
     #println(dX0)
     ansp = transpose(history(paras, Bac, [0, cal_num * dt * Lya_dt], dX0))
-    println(ansp[:, 1])
+    #println(ansp[:, 1])
 
     dist0 = norm(ans0[: , start_step][1:2] - ansp[:, 1][1:2])
-    println(ans0[: , start_step] - ansp[:, 1], dist0)
+    #println(ans0[: , start_step] - ansp[:, 1], dist0)
 
     Lya = 0.0
     for i in 1:step
         end_st = Int(i * Lya_dt + start_step)
         #ansp[:, Lya_dt + 1][3] = ans0[: , end_st][3]
-        println(ansp[:, Lya_dt + 1]," ", ans0[: , end_st])
+        #println(ansp[:, Lya_dt + 1]," ", ans0[: , end_st])
         p_i = norm(ans0[: , end_st] - ansp[:, Lya_dt + 1]) / dist0
         #println("here")
         per_X0i = ans0[: , end_st] + (ansp[:, Lya_dt + 1] - ans0[: , end_st]) / p_i
@@ -106,7 +112,7 @@ dt = 0.001
 params = paramerte(dt,α,B, BK, γ, ω, Bac_phase)
 per = [0.01,0.0, 0.0]
 start_step = 700000
-Lya_step = 1000
+Lya_step = 1001
 
-FMR_Lyapunov_map(per,  5,params, tspan, S0, 0, 25, 101,Lya_step,start_step)
+FMR_Lyapunov_map(per,  5,params, tspan, S0, 0, 25, 251,Lya_step,start_step)
 
