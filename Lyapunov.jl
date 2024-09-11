@@ -50,10 +50,10 @@ function FMR_Lyapunov_map(per, cal_num,paras,tspan, S0,sta_B,end_B,step_B,Lya_st
         #print(Lya) 
         Lya_list = append!(Lya_list, [Lya])
         B_list = append!(B_list, [Bac])
-        println(Bac)
+        #println(Bac)
     end
 
-    filename = "julia_GPU/data/maps_test/FMR_Lyapunovmap_Bx_$(paras.B[1])_Ky_$(paras.BK[2])_$(paras.ω)GHz._start_step_$(start_step)_Lyastep_$(Lya_step)_alpha$(α)_paper_0-25.txt"
+    filename = "julia_pro/data/maps_test/FMR_Lyapunovmap_Bx_$(paras.B[1])_Ky_$(paras.BK[2])_$(paras.ω)GHz._start_step_$(start_step)_Lyastep_$(Lya_step)_alpha$(α)_paper_0-25.txt"
     open(filename,"w") do out
         Base.print_array(out, hcat(B_list[:], Lya_list[:])) # x,y,zの3列にして掃き出し
     end
@@ -108,10 +108,10 @@ Bac_phase = [0.0, 0.0, 0.0]
 α = 0.05
 γ = 0.176335977
 ω = 20.232
-dt = 0.001
+dt = 0.0001
 params = paramerte(dt,α,B, BK, γ, ω, Bac_phase)
 per = [0.01,0.0, 0.0]
-start_step = 700000
+start_step = 7000000
 Lya_step = 1001
 
 FMR_Lyapunov_map(per,  5,params, tspan, S0, 0, 25, 251,Lya_step,start_step)
