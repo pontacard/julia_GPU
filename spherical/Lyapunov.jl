@@ -1,6 +1,7 @@
 using DifferentialEquations
 using Plots
 using LinearAlgebra
+using Base.Threads
 
 struct paramerte
     dt
@@ -44,7 +45,7 @@ function FMR_Lyapunov_map(per, cal_num,paras,tspan, S0,sta_B,end_B,step_B,Lya_st
     B_eval = Vector(sta_B :step_B: end_B)
     B_list = []
     Lya_list = []
-    for Bac in B_eval
+    Threads.@threads for Bac in B_eval
         #duf = FMR(t_span,α, B_ex,BK, γ,[0,B,0], ω,phase, S0)
         Lya = matsunaga_Lyapunov(per, Lya_step, cal_num, start_step, paras, [0.0, Bac, 0.0], tspan, S0)
         #print(Lya) 

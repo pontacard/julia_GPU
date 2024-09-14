@@ -43,7 +43,7 @@ end
 function FMR_Lyapunov_map(per, cal_num,paras,tspan, S0,B_eval,Lya_step,start_step) #step_Bは等差数列の差の値を入れる
     B_list = []
     Lya_list = []
-    for Bac in B_eval
+    Threads.@threads for Bac in B_eval
         #duf = FMR(t_span,α, B_ex,BK, γ,[0,B,0], ω,phase, S0)
         Lya = matsunaga_Lyapunov(per, Lya_step, cal_num, start_step, paras, [0.0, Bac, 0.0], tspan, S0)
         #print(Lya) 
@@ -52,7 +52,7 @@ function FMR_Lyapunov_map(per, cal_num,paras,tspan, S0,B_eval,Lya_step,start_ste
         #println(Bac)
     end
 
-    filename = "data/maps_test/FMR_Lyapunovmap_Bx_$(paras.B[1])_Ky_$(paras.BK[2])_$(paras.ω)GHz._start_step_$(start_step)_Lyastep_$(Lya_step)_alpha$(α)_paper_0-25.txt"
+    filename = "data/maps_test/FMR_Lyapunovmap_Bx_$(paras.B[1])_Ky_$(paras.BK[2])_$(paras.ω)GHz._start_step_$(start_step)_Lyastep_$(Lya_step)_alpha$(α)_paper_0-2.5.txt"
     open(filename,"w") do out
         Base.print_array(out, hcat(B_list[:], Lya_list[:])) # x,y,zの3列にして掃き出し
     end
@@ -100,19 +100,19 @@ end
 # 問題定義 (地球・月系のNear-Rectilinear Halo Orbitを与える初期条件)
 S0 = [pi/2, 0.0, 0.0]
 tspan = (0.0, 800.0)
-B = [160.0, 0.0, 0.0]
-BK = [0.0, 200.0, 0.0]
+B = [45.0, 0.0, 0.0]
+BK = [0.0, 50.0, 0.0]
 Bac = [0.0, 15, 0.0]
 Bac_phase = [0.0, 0.0, 0.0]
-α = 0.05
+α = 0.01
 γ = 0.176335977
-ω = 20.232
+ω = 3.84
 dt = 0.001
 params = paramerte(dt,α,B, BK, γ, ω, Bac_phase)
 per = [0.01,0.0, 0.0]
 start_step = 700000
 Lya_step = 1001
-B_eval = Vector(0:0.1:25)
+B_eval = Vector(0:0.01:2.5)
 #println(B_eval)
 
 FMR_Lyapunov_map(per,  5,params, tspan, S0, B_eval,Lya_step,start_step)
