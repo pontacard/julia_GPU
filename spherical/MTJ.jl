@@ -54,7 +54,7 @@ function FMR_Lyapunov_map(per, cal_num,paras,tspan, S0,B_eval,Lya_step,start_ste
         #println(Bac)
     end
 
-    filename = "data/MTJ_data/MTJ_Lyapunovmap_Bx_$(paras.B[1])_Ky_$(paras.BK[2])_$(paras.ω)GHz._start_step_$(start_step)_Lyastep_$(Lya_step)_alpha$(α)_STT_$(paras.DC_torque[1])_paper_0-2.5.txt"
+    filename = "data/MTJ_data/MTJ_Lyapunovmap_Bx_$(paras.B[1])_Ky_$(paras.BK[2])_$(paras.ω)GHz._start_step_$(start_step)_Lyastep_$(Lya_step)_alpha$(paras.α)_STT_$(paras.DC_torque[1])_paper_0-2.5.txt"
     open(filename,"w") do out
         Base.print_array(out, hcat(B_list[:], Lya_list[:])) # x,y,zの3列にして掃き出し
     end
