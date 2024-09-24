@@ -25,15 +25,15 @@ S0 = [pi/2, 0.0, 0.0]
 tspan = (0.0, 800.0)
 B = [160.0, 0.0, 0.0]
 BK = [0.0, 200.0, 0.0]
-Bac = [0.0, 15, 0.0]
+Bac = [0.0, 7, 0.0]
 Bac_phase = [0.0, 0.0, 0.0]
 α = 0.05
 γ = 0.176335977
 ω = 20.232
 dt = 0.001
 spin = Lya.para(dt,α,B, BK, γ, ω, Bac_phase, LLG!)
-per = [0.01,0.0, 0.0]
+per = [0.01,0.01, 0.01]
 start_step = 700000
 Lya_step = 1000
 
-Lya.history(spin, Bac, tspan, S0)
+Lya.matsunaga_Lyapunov(spin, per, Lya_step, 5, start_step, Bac, tspan, S0)

@@ -43,25 +43,25 @@ end
 function matsunaga_Lyapunov(self,pertu, step, cal_num, start_step,Bac, tspan, S0)
     dt = self.dt
     Lya_dt = Int((tspan[2] / dt - start_step) ÷ step)
-    println(Lya_dt)
+    #println(Lya_dt)
     ans0_ = history(self,Bac, tspan, S0)
     ans0 = transpose(ans0_)
-    println(ans0[: , start_step])
+    #println(ans0[: , start_step])
     
 
     dX0 = ans0[: , start_step] + pertu
     #println(dX0)
     ansp = transpose(history(self, Bac, [0, cal_num * dt * Lya_dt], dX0))
-    println(ansp[:, 1])
+    #println(ansp[:, 1])
 
-    dist0 = norm(ans0[: , start_step][1:2] - ansp[:, 1][1:2])
-    println(ans0[: , start_step] - ansp[:, 1], dist0)
+    dist0 = norm(ans0[: , start_step] - ansp[:, 1])
+    #println(ans0[: , start_step] - ansp[:, 1], dist0)
 
     Lya = 0.0
     for i in 1:step
         end_st = Int(i * Lya_dt + start_step)
         #ansp[:, Lya_dt + 1][3] = ans0[: , end_st][3]
-        println(ansp[:, Lya_dt + 1]," ", ans0[: , end_st])
+        #println(ansp[:, Lya_dt + 1]," ", ans0[: , end_st])
         p_i = norm(ans0[: , end_st] - ansp[:, Lya_dt + 1]) / dist0
         #println("here")
         per_X0i = ans0[: , end_st] + (ansp[:, Lya_dt + 1] - ans0[: , end_st]) / p_i
