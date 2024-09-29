@@ -26,15 +26,16 @@ function LLG!(dS,S,params,t)
     #println(B_θ)
     B_ϕ = - sin(S[2]) * (B[1] + K[1] * sin(S[1]) * cos(S[2])) + cos(S[2]) * (B[2] +  K[2] * sin(S[1]) * sin(S[2]))
 
-    SOT_θ = cosθ * cosϕ * SOTac[1] *  sin(S[3] + phase[1]) + cosθ * sinϕ * SOTac[2] * sin(S[3] + phase[1]) - sinθ * SOTac[3] * sin(S[3] + phase[1])
-    SOT_ϕ = - sinϕ * SOTac[1] *  sin(S[3] + phase[1]) + cosθ * sinϕ * SOTac[2] *  sin(S[3] + phase[1])
+    SOT_θ = cosθ * cosϕ * SOTac[1] * sin(S[3] + phase[1]) + cosθ * sinϕ * SOTac[2] * sin(S[3] + phase[2]) - sinθ * SOTac[3] * sin(S[3] + phase[3])
+    SOT_ϕ = - sinϕ * SOTac[1] * sin(S[3] + phase[1]) + cosϕ * SOTac[2] * sin(S[3] + phase[2])
     
     
     dS[1] = γ * B_ϕ + α * γ * B_θ + γ * SOT_θ
 
     dS[2] = - γ * (B_θ /sin(S[1])) + α * γ * (B_ϕ / sin(S[1])) + γ * (SOT_ϕ / sin(S[1]))
     dS[3] = ω 
-    
+
+
 end
 
 function history(para_dif, Bac, tspan, S0)      #structのparasを引数にすれば良い
@@ -54,7 +55,7 @@ function FMR_Lyapunov_map(per, cal_num,paras,tspan, S0,SOT_eval,Lya_step,start_s
     Threads.@threads for SOTac in SOT_eval
         #duf = FMR(t_span,α, B_ex,BK, γ,[0,B,0], ω,phase, S0)
         Lya = matsunaga_Lyapunov(per, Lya_step, cal_num, start_step, paras, [0.0, SOTac, 0.0], tspan, S0)
-        #print(Lya) 
+        print(Lya) 
         Lya_list = append!(Lya_list, [Lya])
         SOT_list = append!(SOT_list, [SOTac])
         #println(Bac)
