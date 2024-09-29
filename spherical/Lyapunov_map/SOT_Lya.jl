@@ -113,6 +113,7 @@ SOTac = [0.0, 15, 0.0]
 SOTac_phase = [0.0, 0.0, 0.0]
 α = 0.05
 γ = 0.176335977
+ω = 20.232
 dt = 0.001
 per = [0.01, 0.01, 0.01]
 start_step = 700000
@@ -125,7 +126,7 @@ BKy = BK[2]
 Bx = [160, 0.0, 0.0]
 
 params = paramerte(dt,α,Bx, BK, γ, ω, SOTac_phase)
-FMR_Lyapunov_map(per,  5,params, tspan, S0, SOT_eval,Lya_step,start_step)
+FMR_Lyapunov_map(per,  5,params, tspan, S0, SOTac_eval,Lya_step,start_step)
 """
 for Bx in Bx_eval
     if BKy > Bx
