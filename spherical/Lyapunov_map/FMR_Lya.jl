@@ -93,6 +93,7 @@ function matsunaga_Lyapunov(pertu, step, cal_num, start_step,paras,Bac, tspan, S
 
     cal_time = Lya_dt * step * dt
     Lya_expo = Lya / cal_time
+    println(Lya_expo)
     return Lya_expo
 end 
 
@@ -106,12 +107,12 @@ Bac_phase = [0.0, 0.0, 0.0]
 α = 0.05
 γ = 0.176335977
 dt = 0.001
-per = [0.01, 0.01, 0.01]
+per = [0.01, 0.01, 0]
 start_step = 700000
 Lya_step = 1001
 B_eval = Vector(0:0.1:25)
 
-Bx_eval = Vector(100:0.5:250)
+Bx_eval = Vector(147:1:250)
 BKy = BK[2]
 for Bx in Bx_eval
     if BKy > Bx
