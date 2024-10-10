@@ -76,7 +76,7 @@ function matsunaga_Lyapunov(pertu, step, cal_num, start_step,paras,Bac, tspan, S
     for i in 1:step
         end_st = Int(i * Lya_dt + start_step)
         #ansp[:, Lya_dt + 1][3] = ans0[: , end_st][3]
-        println(ansp[:, Lya_dt + 1]," ", ans0[: , end_st])
+        #println(ansp[:, Lya_dt + 1]," ", ans0[: , end_st])
         p_i = norm(ans0[: , end_st] - ansp[:, Lya_dt + 1]) / dist0
         #println("here")
         per_X0i = ans0[: , end_st] + (ansp[:, Lya_dt + 1] - ans0[: , end_st]) / p_i
@@ -98,16 +98,16 @@ S0 = [pi/2, 0.0, 0.0]
 tspan = (0.0, 800.0)
 B = [160.0, 0.0, 0.0]
 BK = [0.0, 200.0, 0.0]
-Bac = [0.0, 15, 0.0]
+Bac = [0.0, 10.9, 0.0]
 Bac_phase = [0.0, 0.0, 0.0]
 α = 0.05
 γ = 0.176335977
-ω = 20.232
+ω = 21.16
 dt = 0.001
 params = paramerte(dt,α,B, BK, γ, ω, Bac_phase)
-per = [0.01,0.0, 0.0]
+per = [0.01,0.01, 0.01]
 start_step = 700000
 Lya_step = 1000
-
-FMR_Lyapunov_map(per,  5,params, tspan, S0, 0, 25, 101,Lya_step,start_step)
+@time matsunaga_Lyapunov(per, Lya_step, 5, start_step, params,Bac, tspan,S0)
+#FMR_Lyapunov_map(per,  5,params, tspan, S0, 0, 25, 101,Lya_step,start_step)
 
