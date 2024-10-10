@@ -1,14 +1,9 @@
-struct FMR
-    tspan
-    α
-    B
-    BK
-    γ
-    Bac
-    ω
-    phase 
-    S0 
-end
+include("./tool.jl")
+
+using .Lya
+using DifferentialEquations
+using LinearAlgebra
+using Plots
 
 function LLG!(dS,S,params,t)
     α,B, K, γ, Bac, ω, phase = params
@@ -26,36 +21,25 @@ function LLG!(dS,S,params,t)
     
 end
 
-
-using DifferentialEquations
-using Plots
-
-# 問題定義 (地球・月系のNear-Rectilinear Halo Orbitを与える初期条件)
 S0 = [pi/2, 0.0, 0.0]
-tspan = (0.0, 1000.0)
-B = [45.0, 0.0, 0.0]
-BK = [0.0, 50.0, 0.0]
-Bac = [0.0, 3, 0.0]
+tspan = (0.0, 800.0)
+B = [160.0, 0.0, 0.0]
+BK = [0.0, 200.0, 0.0]
+Bac = [0.0, 10.92, 0.0]
 Bac_phase = [0.0, 0.0, 0.0]
-α = 0.1
+α = 0.05
 γ = 0.176335977
-ω = 3.84
+ω = 21.16
 dt = 0.001
-params = [α,B, BK, γ, Bac, ω, Bac_phase]
-prob = ODEProblem(LLG!, S0, tspan, params)
-@time result = solve(prob,dt=dt, adaptive=false)
-#result = solve(prob)
+spin = Lya.para(dt,α,B, BK, γ, ω, Bac_phase, LLG!)
+per = [0.01,0.01, 0.01]
+start_step = 700000
+Lya_step = 1000
 
-# 計算
-#result = solve(prob, reltol=1e-12, abstol=1e-12)
+path = "/Users/tatsumiryou/PycharmProjects/spin/others/plot_from_julia/data/phase/"
+filename = "test.txt"
+Lya.history(spin,Bac,tspan,S0)
+Lya.Si_Sj_phase(2,1,700000,750000)
+Lya.history_text(path * filename)
 
-# 描画
-t = result.t 
-x = [u[1] for u in result.u]
-y = [u[2] for u in result.u]
-#println(y[90000:91000])
-
-plot(y[900000:950000], x[900000:950000])
-
-#filename = "/Users/tatsumiryou/Spin_picture/for_paper/FMR_trajectry_Bx_$(B[1])_BK_$(BK[2])_Bac_$(Bac[2])_α_$(α)_ω_$(ω).pdf"
-#savefig(filename)
+#@time Lya.matsunaga_Lyapunov(spin, per, Lya_step, 5, start_step, Bac, tspan, S0)
