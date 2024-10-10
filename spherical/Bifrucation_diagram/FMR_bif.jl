@@ -35,7 +35,7 @@ end
 function FMR_Bifrucation_map(paras,ax,tspan, S0,B_eval,start_step,stop_step) #step_Bは等差数列の差の値を入れる
     B_list = []
     poi_list = []
-    for Bac in B_eval
+    Threads.@threads for Bac in B_eval
         #println("here") 
         his = Lya.history(paras,[0.0, Bac, 0.0],tspan,S0)       
         #duf = FMR(t_span,α, B_ex,BK, γ,[0,B,0], ω,phase, S0)
