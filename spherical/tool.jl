@@ -2,7 +2,6 @@
 module Lya
 using DifferentialEquations
 using LinearAlgebra
-using Plots
 using DelimitedFiles
 
  struct para
