@@ -47,14 +47,14 @@ function FMR_Bifrucation_map(paras,ax,tspan, S0,B_eval,start_step,stop_step) #st
         #println(Bac)
     end
 
-    filename = "data/Bif_diagram/FMR_bifrucation_map_Bx_$(paras.B[1])_Ky_$(paras.BK[2])_$(paras.ω)GHz._start_step_$(start_step)_alpha$(α)_paper_0-25.txt"
+    filename = "data/Bif_diagram/FMR_bifrucation_map_Bx_$(paras.B[1])_Ky_$(paras.BK[2])_$(paras.ω)GHz._start_step_$(start_step)_alpha$(α)_paper_inichange_0-25.txt"
     open(filename,"w") do out
         Base.print_array(out, hcat(B_list[:], poi_list[:])) # x,y,zの3列にして掃き出し
     end
 
 end 
 
-S0 = [pi/2, 0.0, 0.0]
+S0 = [1.7, 0.6435, 0.0]
 tspan = (0.0, 800.0)
 B = [160.0, 0.0, 0.0]
 BK = [0.0, 200.0, 0.0]
