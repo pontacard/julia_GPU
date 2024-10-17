@@ -52,7 +52,7 @@ function FMR_Lyapunov_map(per, cal_num,paras,tspan, S0,B_eval,Lya_step,start_ste
         #println(Bac)
     end
 
-    filename = "data/maps_$(paras.α)_new/FMR_Lyapunovmap_Bx_$(paras.B[1])_Ky_$(paras.BK[2])_$(paras.ω)GHz._start_step_$(start_step)_Lyastep_$(Lya_step)_alpha$(α)_paper_0-25.txt"
+    filename = "data/Lyapunov/FMR_Lyapunovmap_Bx_$(paras.B[1])_Ky_$(paras.BK[2])_$(paras.ω)GHz._start_step_$(start_step)_Lyastep_$(Lya_step)_alpha$(α)_paper_0-25.txt"
     open(filename,"w") do out
         Base.print_array(out, hcat(B_list[:], Lya_list[:])) # x,y,zの3列にして掃き出し
     end
@@ -62,7 +62,7 @@ end
 function matsunaga_Lyapunov(pertu, step, cal_num, start_step,paras,Bac, tspan, S0)
     dt = paras.dt
     Lya_dt = Int((tspan[2] / dt - start_step) ÷ step)
-    println(Lya_dt)
+    #println(Lya_dt)
     ans0_ = history(paras,Bac, tspan, S0)
     ans0 = transpose(ans0_)
     #println(ans0[: , start_step])
@@ -93,7 +93,7 @@ function matsunaga_Lyapunov(pertu, step, cal_num, start_step,paras,Bac, tspan, S
 
     cal_time = Lya_dt * step * dt
     Lya_expo = Lya / cal_time
-    println(Lya_expo)
+    #println(Lya_expo)
     return Lya_expo
 end 
 
@@ -110,10 +110,16 @@ dt = 0.001
 per = [0.01, 0.01, 0.01]
 start_step = 700000
 Lya_step = 1001
-B_eval = Vector(0:0.1:25)
+B_eval = Vector(0:0.025:25)
 
 Bx_eval = Vector(147:1:250)
 BKy = BK[2]
+
+ω = 20.2
+B = [160, 0.0, 0.0]
+params = paramerte(dt,α,B, BK, γ, ω, Bac_phase)
+FMR_Lyapunov_map(per,  5,params, tspan, S0, B_eval,Lya_step,start_step)
+"""
 for Bx in Bx_eval
     if BKy > Bx
         ω = γ * sqrt(BKy^2 - Bx^2)
@@ -128,3 +134,4 @@ for Bx in Bx_eval
     params = paramerte(dt,α,B, BK, γ, ω, Bac_phase)
     FMR_Lyapunov_map(per,  5,params, tspan, S0, B_eval,Lya_step,start_step)
 end
+"""
