@@ -114,12 +114,12 @@ SOTac = [0.0, 15, 0.0]
 SOTac_phase = [0.0, 0.0, 0.0]
 α = 0.05
 γ = 0.176335977
-ω = 20.232
+ω = 20.2
 dt = 0.001
 per = [0.01, 0.01, 0.01]
 start_step = 700000
 Lya_step = 1001
-SOTac_eval = Vector(10:0.2:35)
+SOTac_eval = Vector(10:0.025:35)
 
 Bx_eval = Vector(100:0.5:250)
 BKy = BK[2]
