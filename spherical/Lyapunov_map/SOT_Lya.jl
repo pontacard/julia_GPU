@@ -49,7 +49,7 @@ function history(para_dif, Bac, tspan, S0)      #structのparasを引数にす�
     return [θ ϕ z]
 end
 
-function FMR_Lyapunov_map(per, cal_num,paras,tspan, S0,SOT_eval,Lya_step,start_step) #step_Bは等差数列の差の値を入れる
+function SOT_Lyapunov_map(per, cal_num,paras,tspan, S0,SOT_eval,Lya_step,start_step) #step_Bは等差数列の差の値を入れる
     SOT_list = []
     Lya_list = []
     Threads.@threads for SOTac in SOT_eval
@@ -61,7 +61,7 @@ function FMR_Lyapunov_map(per, cal_num,paras,tspan, S0,SOT_eval,Lya_step,start_s
         #println(Bac)
     end
 
-    filename = "data/SOT_maps_$(paras.α)/FMR_Lyapunovmap_Bx_$(paras.B[1])_Ky_$(paras.BK[2])_$(paras.ω)GHz._start_step_$(start_step)_Lyastep_$(Lya_step)_alpha$(α)_paper_0-25.txt"
+    filename = "data/SOT_maps_$(paras.α)_new/FMR_Lyapunovmap_Bx_$(paras.B[1])_Ky_$(paras.BK[2])_$(paras.ω)GHz._start_step_$(start_step)_Lyastep_$(Lya_step)_alpha$(α)_paper_0-25.txt"
     open(filename,"w") do out
         Base.print_array(out, hcat(SOT_list[:], Lya_list[:])) # x,y,zの3列にして掃き出し
     end
@@ -119,16 +119,16 @@ dt = 0.001
 per = [0.01, 0.01, 0.01]
 start_step = 700000
 Lya_step = 1001
-SOTac_eval = Vector(10:0.025:35)
+SOTac_eval = Vector(10:0.1:35)
 
-Bx_eval = Vector(100:0.5:250)
+Bx_eval = Vector(100:1:250)
 BKy = BK[2]
 
-Bx = [160, 0.0, 0.0]
+#Bx = [160, 0.0, 0.0]
 
 params = paramerte(dt,α,Bx, BK, γ, ω, SOTac_phase)
-FMR_Lyapunov_map(per,  5,params, tspan, S0, SOTac_eval,Lya_step,start_step)
-"""
+#FMR_Lyapunov_map(per,  5,params, tspan, S0, SOTac_eval,Lya_step,start_step)
+
 for Bx in Bx_eval
     if BKy > Bx
         ω = γ * sqrt(BKy^2 - Bx^2)
@@ -141,6 +141,5 @@ for Bx in Bx_eval
 
     B = [Bx, 0.0, 0.0]
     params = paramerte(dt,α,B, BK, γ, ω, Bac_phase)
-    FMR_Lyapunov_map(per,  5,params, tspan, S0, B_eval,Lya_step,start_step)
+    SOT_Lyapunov_map(per,  5,params, tspan, S0, B_eval,Lya_step,start_step)
 end
-"""
