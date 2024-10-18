@@ -61,7 +61,7 @@ function SOT_Lyapunov_map(per, cal_num,paras,tspan, S0,SOT_eval,Lya_step,start_s
         #println(Bac)
     end
 
-    filename = "data/SOT_maps_$(paras.α)_new/FMR_Lyapunovmap_Bx_$(paras.B[1])_Ky_$(paras.BK[2])_$(paras.ω)GHz._start_step_$(start_step)_Lyastep_$(Lya_step)_alpha$(α)_paper_0-25.txt"
+    filename = "data/SOT_maps_$(paras.α)_new/SOT_Lyapunovmap_Bx_$(paras.B[1])_Ky_$(paras.BK[2])_$(paras.ω)GHz._start_step_$(start_step)_Lyastep_$(Lya_step)_alpha$(α)_paper_10-35.txt"
     open(filename,"w") do out
         Base.print_array(out, hcat(SOT_list[:], Lya_list[:])) # x,y,zの3列にして掃き出し
     end
@@ -126,7 +126,7 @@ BKy = BK[2]
 
 #Bx = [160, 0.0, 0.0]
 
-params = paramerte(dt,α,Bx, BK, γ, ω, SOTac_phase)
+#params = paramerte(dt,α,Bx, BK, γ, ω, SOTac_phase)
 #FMR_Lyapunov_map(per,  5,params, tspan, S0, SOTac_eval,Lya_step,start_step)
 
 for Bx in Bx_eval
@@ -140,6 +140,6 @@ for Bx in Bx_eval
     end
 
     B = [Bx, 0.0, 0.0]
-    params = paramerte(dt,α,B, BK, γ, ω, Bac_phase)
-    SOT_Lyapunov_map(per,  5,params, tspan, S0, B_eval,Lya_step,start_step)
+    params = paramerte(dt,α,B, BK, γ, ω, SOTac_phase)
+    SOT_Lyapunov_map(per,  5,params, tspan, S0, SOTac_eval,Lya_step,start_step)
 end
