@@ -52,7 +52,7 @@ function FMR_Lyapunov_map(per, cal_num,paras,tspan, S0,B_eval,Lya_step,start_ste
         #println(Bac)
     end
 
-    filename = "data/Lyapunov/FMR_Lyapunovmap_Bx_$(paras.B[1])_Ky_$(paras.BK[2])_$(paras.ω)GHz._start_step_$(start_step)_Lyastep_$(Lya_step)_alpha$(α)_paper_0-25.txt"
+    filename = "data/maps_0.01/FMR_Lyapunovmap_Bx_$(paras.B[1])_Ky_$(paras.BK[2])_$(paras.ω)GHz._start_step_$(start_step)_Lyastep_$(Lya_step)_alpha$(α)_paper_0-25.txt"
     open(filename,"w") do out
         Base.print_array(out, hcat(B_list[:], Lya_list[:])) # x,y,zの3列にして掃き出し
     end
@@ -104,22 +104,22 @@ tspan = (0.0, 800.0)
 BK = [0.0, 200.0, 0.0]
 Bac = [0.0, 15, 0.0]
 Bac_phase = [0.0, 0.0, 0.0]
-α = 0.05
+α = 0.01
 γ = 0.176335977
 dt = 0.001
 per = [0.01, 0.01, 0.01]
 start_step = 700000
 Lya_step = 1001
-B_eval = Vector(0:0.025:25)
+B_eval = Vector(0:0.1:25)
 
-Bx_eval = Vector(147:1:250)
+Bx_eval = Vector(100:1:250)
 BKy = BK[2]
 
-ω = 20.2
-B = [160, 0.0, 0.0]
-params = paramerte(dt,α,B, BK, γ, ω, Bac_phase)
-FMR_Lyapunov_map(per,  5,params, tspan, S0, B_eval,Lya_step,start_step)
-"""
+#ω = 20.2
+#B = [160, 0.0, 0.0]
+#params = paramerte(dt,α,B, BK, γ, ω, Bac_phase)
+#FMR_Lyapunov_map(per,  5,params, tspan, S0, B_eval,Lya_step,start_step)
+
 for Bx in Bx_eval
     if BKy > Bx
         ω = γ * sqrt(BKy^2 - Bx^2)
@@ -134,4 +134,3 @@ for Bx in Bx_eval
     params = paramerte(dt,α,B, BK, γ, ω, Bac_phase)
     FMR_Lyapunov_map(per,  5,params, tspan, S0, B_eval,Lya_step,start_step)
 end
-"""
