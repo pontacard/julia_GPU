@@ -60,8 +60,8 @@ function poincare(self, his, ax, start_step, end_step)
     dt = self.dt
     T = 2 * pi / self.ω
     storobo = Int(T ÷ dt)
-    println(storobo)
-    println(typeof(start_step))
+    #println(storobo)
+    #println(typeof(start_step))
 
     return S[start_step:storobo:end_step]
 end
