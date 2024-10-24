@@ -59,7 +59,7 @@ function ST_FMR_Lyapunov_map(per, cal_num,paras,tspan, S0,j_eval,Lya_step,start_
         #println(Bac)
     end
 
-    filename = "data/Lyapnov/FMR_Lyapunovmap_Bx_$(paras.B[1])_Ky_$(paras.BK[2])_$(paras.ω)GHz._start_step_$(start_step)_Lyastep_$(Lya_step)_alpha$(α)_paper_0-2.7.txt"
+    filename = "data/Lyapunov/FMR_Lyapunovmap_Bx_$(paras.B[1])_Ky_$(paras.BK[2])_$(paras.ω)GHz._start_step_$(start_step)_Lyastep_$(Lya_step)_alpha$(α)_paper_0-2.7.txt"
     open(filename,"w") do out
         Base.print_array(out, hcat(j_list[:], Lya_list[:])) # x,y,zの3列にして掃き出し
     end
