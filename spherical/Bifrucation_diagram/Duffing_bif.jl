@@ -1,7 +1,6 @@
 using DifferentialEquations
 using LinearAlgebra
 using Base.Threads
-using Plots
 
 struct paramerte
     dt
@@ -98,7 +97,7 @@ spin = paramerte(dt,α, β, γ, ω, phase, Duffing!)
 #y = his[2,:]
 #plot(x[700000:750000], y[700000:750000])
 
-println(ω)
+#println(ω)
 fac_eval = Vector(30:0.1:80)
 Duf_Bifrucation_map(spin, "x", tspan, X0, fac_eval, 788000, 799900)
 #plot(his[1][900000:950000], his[2][900000:950000])

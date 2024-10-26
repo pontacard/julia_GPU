@@ -1,7 +1,6 @@
 using DifferentialEquations
 using LinearAlgebra
 using Base.Threads
-using Plots
 
 struct paramerte
     dt
