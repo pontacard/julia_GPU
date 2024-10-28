@@ -59,7 +59,7 @@ function ST_FMR_Lyapunov_map(per, cal_num,paras,tspan, S0,j_eval,Lya_step,start_
         #println(Bac)
     end
 
-    filename = "data/Lyapunov/FMR_Lyapunovmap_Bx_$(paras.B[1])_Ky_$(paras.BK[2])_$(paras.ω)GHz._start_step_$(start_step)_Lyastep_$(Lya_step)_alpha$(α)_paper_0-2.7.txt"
+    filename = "data/ST-FMR_maps/ST-FMR_Lyapunovmap_Bx_$(paras.B[1])_Ky_$(paras.BK[2])_$(paras.ω)GHz._start_step_$(start_step)_Lyastep_$(Lya_step)_alpha$(α)_paper_0-2.7.txt"
     open(filename,"w") do out
         Base.print_array(out, hcat(j_list[:], Lya_list[:])) # x,y,zの3列にして掃き出し
     end
@@ -120,9 +120,15 @@ dt = 0.001
 per = [0.01, 0.01, 0.01]
 start_step = 700000
 Lya_step = 1001
-j_eval = Vector(0:0.005:2.7)
+j_eval = Vector(0:0.02:2.7)
 
 ω = 37.16
 B = [180, 0.0, 0.0]
 params = paramerte(dt,α,B, BK, γ, ω, jac_phase)
 ST_FMR_Lyapunov_map(per,  5,params, tspan, S0, j_eval,Lya_step,start_step)
+
+ω_eval = Vector(0:0.5:100)
+for ω in ω_eval
+    params = paramerte(dt,α,B, BK, γ, ω, Bac_phase)
+    FMR_Lyapunov_map(per,  5,params, tspan, S0, B_eval,Lya_step,start_step)
+end

@@ -1,6 +1,7 @@
 using DifferentialEquations
 using LinearAlgebra
 using Base.Threads
+using Plots
 
 struct paramerte
     dt
@@ -19,7 +20,7 @@ function Duffing!(dX,X,params,t)
     #println(sin(S[3] + phase[3]))
     
     dX[1] = X[2]
-    dX[2] = - α * X[2] + β * X[1] - γ * X[1]^3 + fac * sin(X[3]) 
+    dX[2] = - α * X[2] + β * X[1] - γ * X[1] * X[1] * X[1] + fac * cos(X[3]) 
     dX[3] = ω 
     
 end
@@ -79,18 +80,18 @@ function Duf_Bifrucation_map(paras,ax,tspan, S0,f_eval,start_step,stop_step) #st
 
 end 
 
-X0 = [0.6, 0.0, 0.0]
+X0 = [0.859, 0.0, 0.0]
 tspan = (0.0, 800.0)
 α = 1
 β = 130
 γ = 176
 ω = 16.11
 dt = 0.001
-fac = 38.6
+fac = 30.1
 phase = 0.0
 
 spin = paramerte(dt,α, β, γ, ω, phase, Duffing!)
-#his = history(spin, fac, tspan, X0)
+his = history(spin, fac, tspan, X0)
 
 #println(his[1])
 #x = his[1,:]

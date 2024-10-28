@@ -19,7 +19,7 @@ function Duffing!(dX,X,params,t)
     #println(sin(S[3] + phase[3]))
     
     dX[1] = X[2]
-    dX[2] = - α * X[2] + β * X[1] - γ * X[1]^3 + fac * sin(X[3]) 
+    dX[2] = - α * X[2] + β * X[1] - γ * X[1]^3 + fac * cos(X[3]) 
     dX[3] = ω 
     
 end
