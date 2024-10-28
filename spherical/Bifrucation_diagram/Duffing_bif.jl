@@ -98,7 +98,7 @@ his = history(spin, fac, tspan, X0)
 #plot(x[700000:750000], y[700000:750000])
 
 #println(ω)
-fac_eval = Vector(30:0.1:30.2)
+fac_eval = Vector(30:0.1:80.0)
 Duf_Bifrucation_map(spin, "x", tspan, X0, fac_eval, 788000, 799900)
 #plot(his[1][900000:950000], his[2][900000:950000])
 
