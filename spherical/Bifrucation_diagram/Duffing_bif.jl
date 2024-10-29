@@ -79,24 +79,27 @@ function Duf_Bifrucation_map(paras,ax,tspan, S0,f_eval,start_step,stop_step) #st
 
 end 
 
-X0 = [0.859, 0.0, 0.0]
+X0 = [0.537, -4.559, 4.965]
 tspan = (0.0, 800.0)
 α = 1
 β = 130
 γ = 176
 ω = 16.11
 dt = 0.001
-fac = 30.1
+fac = 30.8
 phase = 0.0
 
 spin = paramerte(dt,α, β, γ, ω, phase, Duffing!)
 his = history(spin, fac, tspan, X0)
 
 #println(his[1])
-#x = his[1,:]
-#y = his[2,:]
-#plot(x[700000:750000], y[700000:750000])
-
+"""
+x = his[1,:]
+y = his[2,:]
+z = his[3,:]
+plot(x[700000:750000], y[700000:750000])
+#println(x[700000:700100], y[700000:700100],z[700000:700100])
+"""
 #println(ω)
 fac_eval = Vector(30:0.1:80.0)
 Duf_Bifrucation_map(spin, "x", tspan, X0, fac_eval, 788000, 799900)
