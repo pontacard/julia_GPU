@@ -104,22 +104,23 @@ tspan = (0.0, 800.0)
 BK = [0.0, 200.0, 0.0]
 Bac = [0.0, 15, 0.0]
 Bac_phase = [0.0, 0.0, 0.0]
-α = 0.02
+α = 0.05
 γ = 0.176335977
 dt = 0.001
 per = [0.01, 0.01, 0.01]
 start_step = 700000
 Lya_step = 1001
-B_eval = Vector(0:0.1:25)
+B_eval = Vector(0:0.2:60)
 
 Bx_eval = Vector(199:1:205)
 BKy = BK[2]
 
-#ω = 20.2
-#B = [160, 0.0, 0.0]
-#params = paramerte(dt,α,B, BK, γ, ω, Bac_phase)
-#FMR_Lyapunov_map(per,  5,params, tspan, S0, B_eval,Lya_step,start_step)
+ω = 35.2
+B = [0.0, 0.0, 0.0]
+params = paramerte(dt,α,B, BK, γ, ω, Bac_phase)
+FMR_Lyapunov_map(per,  5,params, tspan, S0, B_eval,Lya_step,start_step)
 
+"""
 for Bx in Bx_eval
     if BKy > Bx
         ω = γ * sqrt(BKy^2 - Bx^2)
@@ -134,3 +135,4 @@ for Bx in Bx_eval
     params = paramerte(dt,α,B, BK, γ, ω, Bac_phase)
     FMR_Lyapunov_map(per,  5,params, tspan, S0, B_eval,Lya_step,start_step)
 end
+"""

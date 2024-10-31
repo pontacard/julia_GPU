@@ -56,12 +56,12 @@ end
 
 S0 = [1.7, 0.6435, 0.0]
 tspan = (0.0, 800.0)
-B = [160.0, 0.0, 0.0]
+B = [0.0, 0.0, 0.0]
 BK = [0.0, 200.0, 0.0]
 Bac_phase = [0.0, 0.0, 0.0]
 α = 0.05
 γ = 0.176335977
-ω = 20.2
+ω = 35.2
 dt = 0.001
 spin = Lya.para(dt,α,B, BK, γ, ω, Bac_phase, LLG!)
 
@@ -69,5 +69,5 @@ spin = Lya.para(dt,α,B, BK, γ, ω, Bac_phase, LLG!)
 #println(length(his))
 #println(Lya.poincare(spin, his, "x", 700, 790))
 #Lya.Si_Sj_phase(2,1,700,750)
-Bac_eval = Vector(4:0.025:23)
+Bac_eval = Vector(4:0.1:60)
 FMR_Bifrucation_map(spin, "y", tspan, S0, Bac_eval, 788000, 799900)
