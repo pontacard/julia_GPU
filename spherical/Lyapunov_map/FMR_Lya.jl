@@ -101,7 +101,7 @@ end
 # 問題定義 (地球・月系のNear-Rectilinear Halo Orbitを与える初期条件)
 S0 = [pi/2, 0.0, 0.0]
 tspan = (0.0, 800.0)
-BK = [0.0, 0.0, 0.0]
+BK = [0.0, 0.0, 200.0]
 Bac = [0.0, 15, 0.0]
 Bac_phase = [0.0, 0.0, 0.0]
 α = 0.05
@@ -116,7 +116,7 @@ Bx_eval = Vector(199:1:205)
 BKy = BK[2]
 
 ω = 35.2
-B = [0.0, 0.0, 200.0]
+B = [0.0, 0.0, 0.0]
 params = paramerte(dt,α,B, BK, γ, ω, Bac_phase)
 FMR_Lyapunov_map(per,  5,params, tspan, S0, B_eval,Lya_step,start_step)
 
