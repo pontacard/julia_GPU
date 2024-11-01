@@ -47,21 +47,21 @@ function FMR_Bifrucation_map(paras,ax,tspan, S0,B_eval,start_step,stop_step) #st
         #println(Bac)
     end
 
-    filename = "data/Bif_diagram/FMR_bifrucation_map_Bx_$(paras.B[1])_Ky_$(paras.BK[2])_$(paras.ω)GHz._start_step_$(start_step)_alpha$(α)_paper_inichange_0-25.txt"
+    filename = "data/Bif_diagram/FMR_bifrucation_map_Bx_$(paras.B[1])_Ky_$(paras.BK[2])_$(paras.ω)GHz._start_step_$(start_step)_alpha$(α)_paper_new_0-25.txt"
     open(filename,"w") do out
         Base.print_array(out, hcat(B_list[:], poi_list[:])) # x,y,zの3列にして掃き出し
     end
 
 end 
 
-S0 = [1.7, 0.6435, 0.0]
+S0 = [1.74, 0.7237, 2.833]
 tspan = (0.0, 800.0)
-B = [0.0, 0.0, 0.0]
-BK = [0.0, 0.0, 200.0]
+B = [160.0, 0.0, 0.0]
+BK = [0.0, 200.0, 0.0]
 Bac_phase = [0.0, 0.0, 0.0]
 α = 0.05
 γ = 0.176335977
-ω = 35.2
+ω = 20.2
 dt = 0.001
 spin = Lya.para(dt,α,B, BK, γ, ω, Bac_phase, LLG!)
 
@@ -69,5 +69,5 @@ spin = Lya.para(dt,α,B, BK, γ, ω, Bac_phase, LLG!)
 #println(length(his))
 #println(Lya.poincare(spin, his, "x", 700, 790))
 #Lya.Si_Sj_phase(2,1,700,750)
-Bac_eval = Vector(4:0.2:60)
+Bac_eval = Vector(5.9:0.025:20)
 FMR_Bifrucation_map(spin, "y", tspan, S0, Bac_eval, 788000, 799900)
