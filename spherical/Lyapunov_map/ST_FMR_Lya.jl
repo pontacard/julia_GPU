@@ -111,24 +111,44 @@ end
 # 問題定義 (地球・月系のNear-Rectilinear Halo Orbitを与える初期条件)
 S0 = [pi/2, 0.0, 0.0]
 tspan = (0.0, 800.0)
-BK = [0.0, 200.0, -1000.0]
+BK = [0.0, 200.0, 0.0]
 #Bac = [0.0, 15, 0.0]
 jac_phase = [0.0, 0.0, 0.0]
-α = 0.01
+α = 0.05
 γ = 0.176335977
 dt = 0.001
 per = [0.01, 0.01, 0.01]
 start_step = 700000
 Lya_step = 1001
-j_eval = Vector(0:0.02:2.7)
+j_eval = Vector(0:0.08:8.08)
 
 ω = 37.16
-B = [180, 0.0, 0.0]
+B = [160, 0.0, 0.0]
 params = paramerte(dt,α,B, BK, γ, ω, jac_phase)
 ST_FMR_Lyapunov_map(per,  5,params, tspan, S0, j_eval,Lya_step,start_step)
 
+"""
 ω_eval = Vector(0:0.5:100)
 for ω in ω_eval
     params = paramerte(dt,α,B, BK, γ, ω, Bac_phase)
     FMR_Lyapunov_map(per,  5,params, tspan, S0, B_eval,Lya_step,start_step)
+end
+"""
+
+Bx_eval = Vector(100:1:250)
+BKy = BK[2]
+
+for Bx in Bx_eval
+    if BKy > Bx
+        ω = γ * sqrt(BKy^2 - Bx^2)
+    elseif BKy < Bx
+        ω = γ * sqrt(Bx * (Bx - BKy))
+    else
+        Bx += 0.01
+        ω = γ * sqrt(Bx * (Bx - BKy))
+    end
+
+    B = [Bx, 0.0, 0.0]
+    params = paramerte(dt,α,B, BK, γ, ω, jac_phase)
+    ST_FMR_Lyapunov_map(per,  5,params, tspan, S0, j_eval,Lya_step,start_step)
 end
