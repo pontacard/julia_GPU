@@ -61,7 +61,7 @@ function SOT_Lyapunov_map(per, cal_num,paras,tspan, S0,SOT_eval,Lya_step,start_s
         #println(Bac)
     end
 
-    filename = "data/SOT_maps_$(paras.α)_new/SOT_Lyapunovmap_Bx_$(paras.B[1])_Ky_$(paras.BK[2])_$(paras.ω)GHz._start_step_$(start_step)_Lyastep_$(Lya_step)_alpha$(α)_paper_10-35.txt"
+    filename = "data/SOT_maps_$(paras.α)/SOT_Lyapunovmap_Bx_$(paras.B[1])_Ky_$(paras.BK[2])_$(paras.ω)GHz._start_step_$(start_step)_Lyastep_$(Lya_step)_alpha$(α)_paper_10-35.txt"
     open(filename,"w") do out
         Base.print_array(out, hcat(SOT_list[:], Lya_list[:])) # x,y,zの3列にして掃き出し
     end
@@ -119,7 +119,7 @@ dt = 0.001
 per = [0.01, 0.01, 0.01]
 start_step = 700000
 Lya_step = 1001
-SOTac_eval = Vector(10:0.1:35)
+SOTac_eval = Vector(0:0.2:45)
 
 Bx_eval = Vector(100:1:250)
 BKy = BK[2]
