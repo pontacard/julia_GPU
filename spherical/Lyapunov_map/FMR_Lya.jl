@@ -112,7 +112,7 @@ start_step = 700000
 Lya_step = 1001
 B_eval = Vector(0:0.2:60)
 
-Bx_eval = Vector(199:1:205)
+Bx_eval = Vector(10:1:205)
 BKy = BK[2]
 
 ω = 35.2
