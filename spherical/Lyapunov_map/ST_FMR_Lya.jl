@@ -128,6 +128,7 @@ B = [160, 0.0, 0.0]
 params = paramerte(dt,α,B, BK, γ, ω, jac_phase)
 ST_FMR_Lyapunov_map(per,  5,params, tspan, S0, j_eval,Lya_step,start_step)
 """
+
 """
 ω_eval = Vector(0:0.5:100)
 for ω in ω_eval
