@@ -59,7 +59,7 @@ function ST_FMR_Lyapunov_map(per, cal_num,paras,tspan, S0,j_eval,Lya_step,start_
         #println(Bac)
     end
 
-    filename = "data/Lyapunov/ST-FMR_Lyapunovmap_Bx_$(paras.B[1])_Ky_$(paras.BK[2])_$(paras.ω)GHz._start_step_$(start_step)_Lyastep_$(Lya_step)_alpha$(α)_paper_0-2.7.txt"
+    filename = "data/Lyapunov/ST-FMR_Lyapunovmap_Bx_$(paras.B[1])_Ky_$(paras.BK[2])_$(paras.ω)GHz._start_step_$(start_step)_Lyastep_$(Lya_step)_alpha$(α)_paper_0.1-2.txt"
     open(filename,"w") do out
         Base.print_array(out, hcat(j_list[:], Lya_list[:])) # x,y,zの3列にして掃き出し
     end
@@ -70,8 +70,8 @@ function matsunaga_Lyapunov(pertu, step, cal_num, start_step,paras,jac, tspan, S
     dt = paras.dt
     Lya_dt = Int((tspan[2] / dt - start_step) ÷ step)
     
-    Bac = 3.7 * jac         #実際はBac[mT] = jac[A/m] * 2.7 × 10^9[mT*m/A]
-    SOTac = 0.153 * jac
+    Bac = 3.7 * jac         #実際はBac[mT] = jac[A/m] * 3.7 × 10^12[mT*m/A]
+    SOTac = 7.69 * jac
 
     ans0_ = history(paras,Bac, SOTac, tspan, S0)
     ans0 = transpose(ans0_)
@@ -120,7 +120,7 @@ dt = 0.001
 per = [0.01, 0.01, 0.01]
 start_step = 700000
 Lya_step = 1001
-j_eval = Vector(1.0:0.02:6.0)
+j_eval = Vector(0.1:0.02:2.0)
 
 ω = 21.16
 B = [160, 0.0, 0.0]
