@@ -2,7 +2,6 @@
 module Tool
 using DifferentialEquations
 using LinearAlgebra
-using Plots
 using DelimitedFiles
 
 function history(self, self_vec, func, tspan, S0)      #selfは辞書式、self_vecはベクトルとしてパラメーターが入ってる(DifferentialEquationsのせいでこうしてる)
